@@ -3,8 +3,9 @@ package src;
 public class Main {
 
 	public static void main(String[] args) {
-		//APIConsumer.ShowUniversitiesInCountryEntered();
 		//APIConsumer.ShowAllCountryInAPI();
+		//APIConsumer.ShowUniversitiesInCountryEntered();
+		JDBC.initializeDatabase();
 	}
 
 }

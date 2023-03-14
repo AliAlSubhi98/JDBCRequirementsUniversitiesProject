@@ -44,9 +44,10 @@ public class APIConsumer<E> {
 			University[] universities = gson.fromJson(json.toString(), University[].class);
 
 			// Use universities array for further processing
+			System.out.println("=============================================================================");
 			for (int i = 0; i < universities.length; i++) {
 				University university = universities[i];
-				System.out.println((i + 1) + ":" + university.state_province + " - " + university.country + " - "
+				System.out.println((i + 1) + ":\t" + university.state_province + " - " + university.country + " - "
 						+ university.name + " - " + university.alpha_two_code);
 
 				// iterate over domains
@@ -57,7 +58,9 @@ public class APIConsumer<E> {
 				// iterate over web_pages
 				for (int k = 0; k < university.web_pages.length; k++) {
 					System.out.println("\tWeb page " + (k + 1) + ": " + university.web_pages[k]);
+
 				}
+				System.out.println("=============================================================================");
 			}
 
 		} catch (Exception e) {
