@@ -11,14 +11,14 @@ import com.google.gson.Gson;
 
 public class APIConsumer<E> {
 	static ArrayList<String> countryList = new ArrayList<>();
-
+	public static University universities[];
 	public static void ShowUniversitiesInCountryEntered() {
 
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\t\t\t\tEnter Country to pick all the Universities Details \n\t\t\t\tFor Ex.( United%20states OR Oman ):::");
 		String countryInput = sc.next();
 
-		sc.close();
+		
 		String apiUrl = "http://universities.hipolabs.com/search?country=" + countryInput  ;// United%20states
 		try {
 			URL url = new URL(apiUrl);
@@ -41,7 +41,7 @@ public class APIConsumer<E> {
 			conn.disconnect();
 
 			Gson gson = new Gson();
-			University[] universities = gson.fromJson(json.toString(), University[].class);
+			universities = gson.fromJson(json.toString(), University[].class);
 
 			// Use universities array for further processing
 			System.out.println("=============================================================================");
@@ -92,7 +92,7 @@ public class APIConsumer<E> {
 			conn.disconnect();
 
 			Gson gson = new Gson();
-			University[] universities = gson.fromJson(json.toString(), University[].class);
+			universities = gson.fromJson(json.toString(), University[].class);
 	
 			
 			// Use universities array for further processing
