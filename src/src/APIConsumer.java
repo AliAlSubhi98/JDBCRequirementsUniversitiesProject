@@ -15,9 +15,11 @@ public class APIConsumer<E> {
 	public static void ShowUniversitiesInCountryEntered() {
 
 		Scanner sc = new Scanner(System.in);
-		System.out.println("\t\t\t\tEnter Country to pick all the Universities Details \n\t\t\t\tFor Ex.( United%20states OR Oman ):::");
+		System.out.println("\t\t\t\tEnter Country to pick all the Universities Details \n\t\t\t\tFor Ex.( United%20states OR Oman OR all ):::");
 		String countryInput = sc.next();
-
+		if (countryInput.equals("all")) {
+			countryInput = "";
+		}
 		
 		String apiUrl = "http://universities.hipolabs.com/search?country=" + countryInput  ;// United%20states
 		try {
@@ -111,6 +113,32 @@ public class APIConsumer<E> {
 		}
 	}
 	//--------------------------------------------------------------------------------------------------------------------------
+	public static void ShowUniversities() {
+	    if (universities == null || universities.length == 0) {
+	        System.out.println("No universities found.");
+	        return;
+	    }
+	    
+	    System.out.println("=============================================================================");
+	    for (int i = 0; i < universities.length; i++) {
+	        University university = universities[i];
+	        System.out.println((i + 1) + ":\t" + university.state_province + " - " + university.country + " - "
+	                + university.name + " - " + university.alpha_two_code);
 
-	
+	        // iterate over domains
+	        for (int j = 0; j < university.domains.length; j++) {
+	            System.out.println("\tDomain " + (j + 1) + ": " + university.domains[j]);
+	        }
+
+	        // iterate over web_pages
+	        for (int k = 0; k < university.web_pages.length; k++) {
+	            System.out.println("\tWeb page " + (k + 1) + ": " + university.web_pages[k]);
+
+	        }
+	        System.out.println("=============================================================================");
+	    }
+	}
+
+	//--------------------------------------------------------------------------------------------------------------------------
+
 }

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
 public class JDBC {
@@ -11,7 +12,7 @@ public class JDBC {
 	static String userName;
 	static String password;
 	
-	public JDBC setAccessToDatabase(JDBC setAccessToDatabase) {
+		public JDBC setAccessToDatabase(JDBC setAccessToDatabase) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("==================LOGIN TO THE DATABASE==================");
 		//System.out.print("Enter database name: ");
@@ -24,7 +25,7 @@ public class JDBC {
 		return setAccessToDatabase;
 		
 	}
-	public void initializeDatabase() {
+		public void initializeDatabase() {
 		
 		System.out.println("Initialize Database");
 		Scanner scanner = new Scanner(System.in);
@@ -136,4 +137,69 @@ public class JDBC {
 				System.err.println(ex);
 			}
 		}
-	}
+	
+		public void fetchTablesFromDatabase() {
+			
+			System.out.println("TRYING TO FETCH universities TABLE ");
+
+			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+			Connection con = null;
+
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				
+				// Update url with the database name
+				url += ";databaseName=" + databaseName;
+				con = DriverManager.getConnection(url, userName, password);
+			    Statement st = con.createStatement();
+
+			    String sql = "SELECT * FROM universities";
+		        ResultSet rs = st.executeQuery(sql);
+
+		        while (rs.next()) {
+		        	int id = rs.getInt("id");
+		            String name = rs.getString("name");
+		            String country = rs.getString("country");
+		            String state_province = rs.getString("state_province");
+		            String domains = rs.getString("domains");
+		            String web_pages = rs.getString("web_pages");
+		            String alpha_two_code = rs.getString("alpha_two_code");
+		            System.out.println(id + ", " +name + ", " + country + ", " + state_province + ", " + domains + ", " + web_pages + ", " + alpha_two_code);
+		        }
+				System.out.println("universities TABLE FETCHED SUCCESSFULLY");
+				con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+		}
+		
+		public void backupDatabase() {
+			
+			System.out.println("TRYING TO BACKUP DATABASE ");
+
+			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+			Connection con = null;
+
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+				
+				// Update url with the database name
+				url += ";databaseName=" + databaseName;
+				con = DriverManager.getConnection(url, userName, password);
+			    Statement st2 = con.createStatement();
+
+			    // Create table if it doesn't exist
+			    String sql2 = "BACKUP DATABASE ali\r\n"
+			    		+ "TO DISK = 'C:\\Users\\Lenovo\\eclipse-workspace\\JDBCRequirementsUniversitiesProject\\Backup\\Backup.bak';;";
+			    st2.executeUpdate(sql2);
+				
+				System.out.println("BACKUP DATABASE SUCCESSFULLY");
+				con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+		}
+	
+}
