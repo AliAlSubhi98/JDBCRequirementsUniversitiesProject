@@ -32,10 +32,9 @@ public class Main {
 				System.out.println("6.  Print universities");
 				System.out.println("7.  Take database backup");
 				System.out.println("8.  Fetch data from database");
-				System.out.println("9.  Fetch data from database");
-				System.out.println("10. Search data by attribute");
-				System.out.println("11. Dump data to file");
-				System.out.println("12. Retrieve data from file");
+				System.out.println("9.  Search data by attribute");
+				System.out.println("10. Dump data to file");
+				System.out.println("11. Retrieve data from file");
 				System.out.println("0.  Exit program");
 				System.out.println("=========================================================");
 				
@@ -85,14 +84,15 @@ public class Main {
 					break;
 
 				case 9:
-					// searchDataByAttribute(databaseName, databaseUser, databasePass);
-					// dumpDataToFile();
+					myJDBC.searchFromDatabase();
 					break;
 
 				case 10:
+					// dumpDataToFile();
+					break;
+				case 11:
 					// retrieveDataFromFile();
 					break;
-
 				case 0:
 					System.exit(0);
 					break;

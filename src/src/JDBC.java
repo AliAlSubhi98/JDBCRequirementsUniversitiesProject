@@ -125,12 +125,12 @@ public class JDBC {
 				// Update url with the database name
 				url += ";databaseName=" + databaseName;
 				con = DriverManager.getConnection(url, userName, password);
-			    Statement st2 = con.createStatement();
+				Statement st2 = con.createStatement();
 
-			    // Create table if it doesn't exist
-			    String sql2 = "drop table universities;";
-			    st2.executeUpdate(sql2);
-				
+				// Create table if it doesn't exist
+				String sql2 = "drop table universities;";
+				st2.executeUpdate(sql2);
+
 				System.out.println("universities TABLE REMOVED SUCCESSFULLY");
 				con.close();
 			} catch (Exception ex) {
@@ -152,21 +152,22 @@ public class JDBC {
 				// Update url with the database name
 				url += ";databaseName=" + databaseName;
 				con = DriverManager.getConnection(url, userName, password);
-			    Statement st = con.createStatement();
+				Statement st = con.createStatement();
 
-			    String sql = "SELECT * FROM universities";
-		        ResultSet rs = st.executeQuery(sql);
+				String sql = "SELECT * FROM universities";
+				ResultSet rs = st.executeQuery(sql);
 
-		        while (rs.next()) {
-		        	int id = rs.getInt("id");
-		            String name = rs.getString("name");
-		            String country = rs.getString("country");
-		            String state_province = rs.getString("state_province");
-		            String domains = rs.getString("domains");
-		            String web_pages = rs.getString("web_pages");
-		            String alpha_two_code = rs.getString("alpha_two_code");
-		            System.out.println(id + ", " +name + ", " + country + ", " + state_province + ", " + domains + ", " + web_pages + ", " + alpha_two_code);
-		        }
+				while (rs.next()) {
+					int id = rs.getInt("id");
+					String name = rs.getString("name");
+					String country = rs.getString("country");
+					String state_province = rs.getString("state_province");
+					String domains = rs.getString("domains");
+					String web_pages = rs.getString("web_pages");
+					String alpha_two_code = rs.getString("alpha_two_code");
+					System.out.println(id + ", " + name + ", " + country + ", " + state_province + ", " + domains + ", "
+							+ web_pages + ", " + alpha_two_code);
+				}
 				System.out.println("universities TABLE FETCHED SUCCESSFULLY");
 				con.close();
 			} catch (Exception ex) {
@@ -201,5 +202,70 @@ public class JDBC {
 				System.err.println(ex);
 			}
 		}
-	
+
+		public void searchFromDatabase() {
+			System.out.println("SEARCH FOR UNIVERSITIES IN DATABASE");
+
+			String url = "jdbc:sqlserver://" + "localhost:1433;" + "encrypt=true;" + "trustServerCertificate=true";
+			Connection con = null;
+
+			try {
+				Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+				DriverManager.registerDriver(driver);
+
+				// Update url with the database name
+				url += ";databaseName=" + databaseName;
+				con = DriverManager.getConnection(url, userName, password);
+				Statement st = con.createStatement();
+
+				Scanner scanner = new Scanner(System.in);
+				System.out.println("Search by name (n), country (c), or alpha_two_code (a)?");
+				String searchType = scanner.next().toLowerCase();
+				System.out.println("Enter search term:");
+				String searchTerm = scanner.next();
+
+				String sql = "";
+				switch (searchType) {
+				case "n":
+					sql = "SELECT DISTINCT name, country, state_province, domains, web_pages, alpha_two_code FROM universities WHERE name LIKE '"
+							+ searchTerm + "%';";
+					break;
+				case "c":
+					sql = "SELECT DISTINCT name, country, state_province, domains, web_pages, alpha_two_code FROM universities WHERE country LIKE '"
+							+ searchTerm + "%';";
+					break;
+				case "a":
+					sql = "SELECT DISTINCT name, country, state_province, domains, web_pages, alpha_two_code FROM universities WHERE alpha_two_code LIKE '"
+							+ searchTerm + "';";
+					break;
+				default:
+					System.err.println("Invalid search type.");
+					break;
+				}
+
+				ResultSet rs = st.executeQuery(sql);
+
+				while (rs.next()) {
+					String name = rs.getString("name");
+					String country = rs.getString("country");
+					String state_province = rs.getString("state_province");
+					String domains = rs.getString("domains");
+					String web_pages = rs.getString("web_pages");
+					String alpha_two_code = rs.getString("alpha_two_code");
+					System.out.println("---------------------------------------------------------");
+					System.out.println("Name: " + name);
+					System.out.println("Country: " + country);
+					System.out.println("State/Province: " + state_province);
+					System.out.println("Domains: " + domains);
+					System.out.println("Web Pages: " + web_pages);
+					System.out.println("Alpha Two Code: " + alpha_two_code);
+					System.out.println(".........................................................");
+				}
+
+				con.close();
+			} catch (Exception ex) {
+				System.err.println(ex);
+			}
+		}
+
 }
