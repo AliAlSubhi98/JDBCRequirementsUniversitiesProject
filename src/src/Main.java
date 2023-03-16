@@ -26,8 +26,9 @@ public class Main {
 				System.out.println("1. Initialize database");
 				System.out.println("2. View list of countries from API");
 				System.out.println("3. View list of Universities in X Country from API");
-				System.out.println("4. Take database backup");
+				System.out.println("4. Insert Data into universities Table - JDBC");
 				System.out.println("5. Remove tables from database");
+				System.out.println("4. Take database backup");
 				System.out.println("6. Print universities");
 				System.out.println("7. Fetch data from API");
 				System.out.println("8. Fetch data from database");
@@ -66,16 +67,16 @@ public class Main {
 				//	break;
 
 				case 4:
-					
-					// removeTablesFromDatabase(databaseName, databaseUser, databasePass);
+					myJDBC.INSERT_INTO_universities();
 					break;
 
 				case 5:
+					myJDBC.removeTablesFromDatabase();
 					
-					// printUniversities(databaseName, databaseUser, databasePass);
 					break;
 					
 				case 6:
+					// printUniversities(databaseName, databaseUser, databasePass);
 					// fetchFromAPI();
 					break;
 
