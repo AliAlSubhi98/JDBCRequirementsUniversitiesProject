@@ -1,7 +1,14 @@
 package src;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,7 +16,7 @@ import java.util.Scanner;
 
 import com.google.gson.Gson;
 
-public class APIConsumer<E> {
+public class APIConsumer implements Serializable {
 	static ArrayList<String> countryList = new ArrayList<>();
 	public static University universities[];
 	public static void ShowUniversitiesInCountryEntered() {
@@ -140,5 +147,73 @@ public class APIConsumer<E> {
 	}
 
 	//--------------------------------------------------------------------------------------------------------------------------
+	/*public static void dumpUniversitiesDataToFile(String fileName) {
+		try {
+			FileOutputStream fos = new FileOutputStream(fileName);
+			PrintWriter writer = new PrintWriter(fos);
+
+			// write each university to file
+			for ( University university : universities) {
+				writer.println(university.state_province + "," + university.country + "," + university.name + ","
+						+ university.alpha_two_code);
+
+				for (String domain : university.domains) {
+					writer.println("\t" + domain);
+				}
+
+				for (String webPage : university.web_pages) {
+					writer.println("\t" + webPage);
+				}
+
+				writer.println();
+			}
+
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}*/
+	//--------------------------------------------------------------------------------------------------------------------------
+
+	public static void dumpUniversitiesDataToFile(String fileName) {
+	    try {
+	        FileOutputStream fileOut = new FileOutputStream(fileName, true);
+	        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+
+	        objectOut.writeObject(universities);
+
+	        objectOut.close();
+	        fileOut.close();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	//--------------------------------------------------------------------------------------------------------------------------
+
+	public static University[] retrieveUniversitiesDataFromFile(String fileName) {
+	    try {
+	        // Open the file
+	        FileInputStream fileIn = new FileInputStream(fileName);
+	        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+	        // Read the universities array from the file
+	        University[] universities = (University[]) objectIn.readObject();
+
+	        // Close the input streams
+	        objectIn.close();
+	        fileIn.close();
+
+	        return universities;
+
+	    } catch (IOException e) {
+	        System.out.println("Error reading from file: " + e.getMessage());
+	        return null;
+
+	    } catch (ClassNotFoundException e) {
+	        System.out.println("Error loading universities class: " + e.getMessage());
+	        return null;
+	    }
+	}
 
 }

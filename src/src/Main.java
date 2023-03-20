@@ -1,17 +1,7 @@
 package src;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
-
-/*public class Main {
-
-	public static void main(String[] args) {
-		APIConsumer.ShowAllCountryInAPI();
-		APIConsumer.ShowUniversitiesInCountryEntered();
-		JDBC.initializeDatabase();
-	}
-
-}*/
-
 import java.util.Scanner;
 
 public class Main {
@@ -88,9 +78,22 @@ public class Main {
 					break;
 
 				case 10:
-					// dumpDataToFile();
+					APIConsumer.dumpUniversitiesDataToFile("universities.txt");
 					break;
 				case 11:
+					University[] universities = APIConsumer.retrieveUniversitiesDataFromFile("universities.txt");
+					int i=0;
+					   if (universities != null) {
+					        for (University university : universities) {
+					        	System.out.println((i + 1) + ":\t" + university.state_province + " - " + university.country + " - "
+										+ university.name + " - " + university.alpha_two_code);
+					        	i++;
+					    // Process the universities array as needed
+					        }
+					} else {
+					    System.out.println("Error: universities array is null");
+					}
+
 					// retrieveDataFromFile();
 					break;
 				case 0:
