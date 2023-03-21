@@ -23,8 +23,9 @@ public class Main {
 				System.out.println("7.  Take database backup");
 				System.out.println("8.  Fetch data from database");
 				System.out.println("9.  Search data by attribute");
-				System.out.println("10. Dump data to file");
-				System.out.println("11. Retrieve data from file");
+				System.out.println("10. Dump data to file without serialization");
+				System.out.println("11. Dump data to file");
+				System.out.println("12. Retrieve data from file");
 				System.out.println("0.  Exit program");
 				System.out.println("=========================================================");
 				
@@ -78,23 +79,14 @@ public class Main {
 					break;
 
 				case 10:
-					APIConsumer.dumpUniversitiesDataToFile("universities.txt");
+					APIConsumer.UniversitiesDataToFile("universitiesWITHOUTseriliaztion.txt");
 					break;
 				case 11:
-					University[] universities = APIConsumer.retrieveUniversitiesDataFromFile("universities.txt");
-					int i=0;
-					   if (universities != null) {
-					        for (University university : universities) {
-					        	System.out.println((i + 1) + ":\t" + university.state_province + " - " + university.country + " - "
-										+ university.name + " - " + university.alpha_two_code);
-					        	i++;
-					    // Process the universities array as needed
-					        }
-					} else {
-					    System.out.println("Error: universities array is null");
-					}
-
+					APIConsumer.dumpUniversitiesDataToFile();
 					// retrieveDataFromFile();
+					break;
+				case 12:
+					APIConsumer.deserializeUniversitiesData();
 					break;
 				case 0:
 					System.exit(0);

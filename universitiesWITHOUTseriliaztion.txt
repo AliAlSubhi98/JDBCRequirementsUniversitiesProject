@@ -1,0 +1,24 @@
+null,Qatar,Northwestern University In Qatar,QA
+	qatar.northwestern.edu
+	http://www.qatar.northwestern.edu/
+
+null,Qatar,University of Qatar,QA
+	qu.edu.qa
+	http://www.qu.edu.qa/
+
+null,Qatar,Oryx International,QA
+	oryxschool.qa
+	https://oryxschool.qa/
+
+null,Qatar,Northwestern University In Qatar,QA
+	qatar.northwestern.edu
+	http://www.qatar.northwestern.edu/
+
+null,Qatar,University of Qatar,QA
+	qu.edu.qa
+	http://www.qu.edu.qa/
+
+null,Qatar,Oryx International,QA
+	oryxschool.qa
+	https://oryxschool.qa/
+
